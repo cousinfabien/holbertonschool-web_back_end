@@ -1,0 +1,1 @@
+# Trimestre 2, semaine finale, Projet 1/3 - Python : Annotations variables
