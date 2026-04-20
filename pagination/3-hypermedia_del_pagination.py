@@ -36,21 +36,19 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict[str, Any]:
+    def get_hyper_index(self, index: int = None,
+                        page_size: int = 10) -> Dict[str, Any]:
         """
         Retrieve a page of data starting from a specific index,
         handling potential deletions in the dataset.
         """
-        # Get the indexed dataset
         indexed_data = self.indexed_dataset()
-        
-        # Verify index is within valid range
+
         assert index is not None and 0 <= index < len(indexed_data)
 
         data = []
         current_index = index
-        
-        # Fetch items until we reach page_size or end of dataset
+
         while len(data) < page_size and current_index < len(indexed_data):
             item = indexed_data.get(current_index)
             if item is not None:
