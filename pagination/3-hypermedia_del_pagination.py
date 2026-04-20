@@ -3,7 +3,6 @@
 Deletion-resilient hypermedia pagination module.
 """
 import csv
-import math
 from typing import List, Dict, Any
 
 
@@ -37,38 +36,30 @@ class Server:
             }
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict[str, Any]:
         """
         Retrieve a page of data starting from a specific index,
         handling potential deletions in the dataset.
-
-        Args:
-            index (int): The starting index of the page.
-            page_size (int): The number of items to return.
-
-        Returns:
-            Dict: A dictionary containing index, next_index, page_size, and data.
         """
-        # 1. Verification of index range
+        # Get the indexed dataset
         indexed_data = self.indexed_dataset()
+        
+        # Verify index is within valid range
         assert index is not None and 0 <= index < len(indexed_data)
 
         data = []
         current_index = index
         
-        # 2. Fetch data: we skip missing keys until we have 'page_size' items
+        # Fetch items until we reach page_size or end of dataset
         while len(data) < page_size and current_index < len(indexed_data):
             item = indexed_data.get(current_index)
             if item is not None:
                 data.append(item)
             current_index += 1
 
-        # 3. The next index to query is where the loop stopped
-        next_index = current_index if current_index < len(indexed_data) else None
-
         return {
             'index': index,
-            'next_index': next_index,
+            'next_index': current_index,
             'page_size': len(data),
             'data': data
         }
