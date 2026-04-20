@@ -67,7 +67,7 @@ class Server:
         # 3. The next index to query is where the loop stopped
         if current_index < len(indexed_data):
             next_index = current_index
-        else: 
+        else:
             None
 
         return {
