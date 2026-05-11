@@ -19,7 +19,7 @@ function countStudents(path) {
 
       for (const student of students) {
         const studentData = student.split(',');
-        if (studentData >= 4) {
+        if (studentData.length >= 4) {
           const firstName = studentData[0];
           const field = studentData[3];
           if (!fields[field]) {
